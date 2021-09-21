@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="registro" type="tiporegistro"/>
+  
+  <xs:complexType name="tipodui">
+    <xs:simpleContent>
+      <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{8,8}-[0-9]{1,1}"/>
+      <xs:attribute type="xs:date" name="vence" use="optional"/>
+    </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="tipodocumento">
+    <xs:sequence>
+      <xs:element type="tipodui" name="dui" minOccurs="1" maxOccurs="1"/>
+      <xs:element type="tipopasaporte" name="pasaporte" minOccurs="1" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="tipotelefono">
+    <xs:simpleContent>
+      <xs:restriction base="xs:int">
+        <xs:pattern value="[0-9]{8,8}"/>
+        <xs:attribute type="xs:string" name="tipo" use="optional"/>
+        <xs:attribute type="xs:string" name="cia" use="optional"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="tipocliente">
+    <xs:sequence>
+      <xs:element type="tiponombre" name="nombre"/>
+      <xs:element type="tipodocumento" name="documento"/>
+      <xs:element type="tipotelefono" name="telefono"/>
+      <xs:element type="tipoemail" name="email"/>
+    </xs:sequence>
+    <xs:attribute type="xs:short" name="codigo" use="optional"/>
+    <xs:attribute type="xs:string" name="sexo" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="tiponombre">
+    <xs:simpleContent>
+      <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Záéíóú]{3,10}"/>
+    </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="tipoemail">
+    <xs:simpleContent>
+      <xs:restriction base="xs:string">
+      <xs:pattern value="[a-z0-9A-Z]{3,10}@[a-z0-9A-Z]{3,15}[\.]{1}[a-zA-Z]{3,4}"/>
+    </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="tipodireccion">
+    <xs:sequence>
+      <xs:element type="xs:string" name="casa" minOccurs="0"/>
+      <xs:element type="xs:string" name="oficina" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="depto" use="optional"/>
+    <xs:attribute type="xs:string" name="municipio" use="optional"/>
+  </xs:complexType>
+    
+  <xs:complexType name="tipoprecio">
+    <xs:sequence>
+      <xs:element type="xs:string" name="moneda"/>
+      <xs:element type="xs:float" name="valor"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="tipocodigo">
+    <xs:simpleContent>
+      <xs:restriction base="xs:short">
+        <xs:pattern value="[0-9]{3,5}"/>
+        <xs:attribute type="xs:string" name="tipo" use="optional"/>
+        <xs:enumeration value="pcportatiles"/>
+        <xs:enumeration value="souvenir"/>
+        <xs:enumeration value="accesorio_pc"/>
+         <xs:enumeration value="perecedero"/>
+         <xs:enumeration value="accesorio_belleza"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>  
+  
+  <xs:complexType name="tiposubtotal">
+    <xs:sequence>
+      <xs:element type="tipomoneda" name="moneda"/>
+      <xs:element type="tipovalor" name="valor"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="tipomoneda">
+    <xs:simpleContent>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="[$]{1,1}"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="tipovalor">
+    <xs:simpleContent>
+      <xs:restriction base="xsd:decimal">
+        <xs:totalDigits value="3"/>
+        <xs:fractionDigits value="2"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+  
+  <xs:complexType name="tipolineafactura">
+    <xs:sequence>
+      <xs:element type="tipocodigo" name="codigo"/>
+      <xs:element type="xs:string" name="detalle"/>
+      <xs:element type="xs:nonNegativeInteger" name="cantidad"/>
+      <xs:element type="tipoprecio" name="precio"/>
+      <xs:element type="tiposubtotal" name="subtotal"/>
+    </xs:sequence>
+    <xs:attribute type="xs:short" name="factura" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="tipototal">
+    <xs:sequence>
+      <xs:element type="xs:tipomoneda" name="moneda"/>
+      <xs:element type="xs:tipovalor" name="valor"/>
+    </xs:sequence>
+  </xs:complexType>
+  
+  <xs:complexType name="tipofactura">
+    <xs:sequence>
+      <xs:element type="xs:short" name="num"/>
+      <xs:element type="tipocliente" name="cliente"/>
+      <xs:element type="tipodireccion" name="direccion"/>
+      <xs:element type="tipolineafactura" name="lineafactura"/>
+      <xs:element type="tipototal" name="total"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="tipo" use="optional"/>
+  </xs:complexType>
+  
+  <xs:complexType name="tipopasaporte">
+    <xs:simpleContent>
+      <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z]{1,1}[0-9]{8,8}"/>
+        <xs:attribute type="xs:string" name="pais" use="optional"/>
+      </xs:restriction>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="tiporegistro">
+    <xs:sequence>
+      <xs:element type="xs:string" name="responsable"/>
+      <xs:element type="tipofactura" name="factura" maxOccurs="10" minOccurs="1"/>
+    </xs:sequence>
+    <xs:attribute type="xs:gYearMonth" name="periodo"/>
+  </xs:complexType>
+  
+</xs:schema>

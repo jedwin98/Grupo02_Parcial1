@@ -1,0 +1,71 @@
+registro{
+	background-color:#7DCEA0; 
+}
+
+a{
+	font-size:5mm;
+	font-family: cursive;
+}
+
+registro{
+	display: table;
+	border-spacing: 10px;
+	border: black 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	width: 98%;
+	background-color:#A9DFBF; 
+}
+
+registro[periodo]::before {
+	content: "Fecha: " attr(periodo);
+	color:red;
+	font-family: "Segoe IU", sans-serif;	
+	font-size:5mm;
+}
+
+registro{
+	display: table;
+	border-spacing: 10px;
+	border: black 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	width: 90%;
+	background-color:#A9DFBF; 
+}
+
+responsable{
+	display: table;
+	border-spacing: 10px;
+	border: black 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	width: 100%;
+	background-color:#A9DFBF; 
+}
+
+responsable{
+	display: block;
+	font-size:5mm;
+	font-family: "Segoe IU", sans-serif;
+	font-style: italic;
+	color:red;
+}
+
+factura{
+	display: table;
+	border-spacing: 10px;
+	border: black 1px solid;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	width: 100%;
+	background-color:#A9DFBF; 
+}
+
+num, cliente, direccion, lineafactura,total{
+	display: block;
+}
